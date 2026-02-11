@@ -525,17 +525,125 @@
     </div>
 
     <script>
+        // ===== PROTEZIONE ANTI-DEVTOOLS =====
+        
+        // 1. Blocco tasto destro
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // 2. Blocco combinazioni di tasti comuni per DevTools
+        document.addEventListener('keydown', function(e) {
+            // F12
+            if (e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+I
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+J
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+C
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+U (visualizza sorgente)
+            if (e.ctrlKey && e.keyCode === 85) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+S (salva pagina)
+            if (e.ctrlKey && e.keyCode === 83) {
+                e.preventDefault();
+                return false;
+            }
+            // F12 o Ctrl+Shift+K (Firefox)
+            if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 75)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // 3. Rilevamento apertura DevTools tramite dimensioni finestra
+        const devtoolsDetector = {
+            isOpen: false,
+            orientation: null
+        };
+
+        const threshold = 160;
+        const emitEvent = (isOpen, orientation) => {
+            if (isOpen) {
+                document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial;font-size:24px;color:#fff;background:#000;">⛔ Accesso Negato</div>';
+            }
+        };
+
+        setInterval(() => {
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+            const orientation = widthThreshold ? 'vertical' : 'horizontal';
+
+            if (!(heightThreshold && widthThreshold) &&
+                ((window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) || widthThreshold || heightThreshold)) {
+                if (!devtoolsDetector.isOpen || devtoolsDetector.orientation !== orientation) {
+                    emitEvent(true, orientation);
+                }
+                devtoolsDetector.isOpen = true;
+                devtoolsDetector.orientation = orientation;
+            } else {
+                if (devtoolsDetector.isOpen) {
+                    emitEvent(false, null);
+                }
+                devtoolsDetector.isOpen = false;
+                devtoolsDetector.orientation = null;
+            }
+        }, 500);
+
+        // 4. Rilevamento debugger
+        function detectDebugger() {
+            const start = new Date();
+            debugger;
+            const end = new Date();
+            if (end - start > 100) {
+                document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial;font-size:24px;color:#fff;background:#000;">⛔ Debugger Rilevato</div>';
+            }
+        }
+        setInterval(detectDebugger, 1000);
+
+        // 5. Protezione contro toString override
+        const element = new Image();
+        Object.defineProperty(element, 'id', {
+            get: function() {
+                document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial;font-size:24px;color:#fff;background:#000;">⛔ DevTools Rilevati</div>';
+            }
+        });
+        console.log(element);
+
+        // 6. Clear console periodicamente
+        setInterval(() => {
+            console.clear();
+        }, 2000);
+
+        // ===== FINE PROTEZIONI =====
+
         const STORAGE_KEY = 'axismc_users';
         const CURRENT_USER_KEY = 'axismc_current_user';
 
         // Initialize with admin account
         function init() {
             let users = getUsers();
-            if (!users.find(u => u.username === 'admin')) {
+            if (!users.find(u => u.username === 'axismc')) {
                 users.push({
                     id: Date.now(),
-                    username: 'admin',
-                    password: 'admin123', // CAMBIA QUESTA PASSWORD!
+                    username: 'axismc',
+                    password: 'AxisMC104', 
                     fullname: 'Amministratore',
                     discord: 'Admin#0000',
                     status: 'approved',
