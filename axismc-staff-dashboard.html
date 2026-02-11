@@ -63,6 +63,9 @@
             position: relative;
             overflow: hidden;
             animation: slideDown 0.6s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         header::before {
@@ -172,7 +175,7 @@
             padding: 8px;
             border-radius: 16px;
             border: 1px solid var(--border);
-            overflow-x: auto;
+            overflow-x: hidden;
             animation: fadeIn 0.8s ease 0.6s both;
         }
 
@@ -481,6 +484,23 @@
             .grid-2 {
                 grid-template-columns: 1fr;
             }
+
+            header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .user-profile {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .user-menu {
+                right: auto;
+                left: 0;
+                width: 100%;
+            }
         }
 
         .highlight {
@@ -521,6 +541,230 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(108, 99, 255, 0.5);
         }
+
+        .user-profile {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .user-name {
+            font-weight: 700;
+            font-size: 1em;
+            color: var(--text);
+        }
+
+        .user-status {
+            font-size: 0.75em;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .user-status::before {
+            content: '●';
+            font-size: 0.8em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .user-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .user-profile:hover .user-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-menu-item {
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+
+        .user-menu-item:hover {
+            background: rgba(108, 99, 255, 0.15);
+            color: var(--primary);
+        }
+
+        .user-menu-item .icon {
+            font-size: 1.2em;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 8px 0;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .mini-badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-approved {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .badge-pending {
+            background: rgba(255, 181, 69, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 0.7em;
+            font-weight: 700;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .user-menu-section {
+            padding: 8px 16px;
+            color: var(--text-muted);
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin-right: 8px;
+            text-transform: uppercase;
+        }
+
+        .rank-manager {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF4444 100%);
+            color: white;
+        }
+
+        .rank-sradmin {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+        }
+
+        .rank-admin {
+            background: linear-gradient(135deg, #FFB545 0%, #FF8E53 100%);
+            color: white;
+        }
+
+        .rank-srmod {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+        }
+
+        .rank-mod {
+            background: linear-gradient(135deg, #6C63FF 0%, #5848d4 100%);
+            color: white;
+        }
+
+        .rank-helper {
+            background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
+            color: white;
+        }
+
+        .rank-trial {
+            background: linear-gradient(135deg, #9E9E9E 0%, #757575 100%);
+            color: white;
+        }
+
+        .permission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .permission-item {
+            background: var(--dark);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            border-left: 3px solid var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -529,20 +773,86 @@
     <div class="container">
         <header>
             <div class="header-content">
-                <h1>🎯 AxisMC Staff Dashboard</h1>
-                <p class="subtitle">Centro di comando per lo staff • Server Mafia</p>
+                <h1>🔓 AxisMC Staff</h1>
+                <p class="subtitle">Centro di comando per lo staff</p>
+            </div>
+            
+            <div class="user-profile">
+                <div class="user-avatar">
+                    AX
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Approvato</div>
+                    <div class="user-status">Staffer</div>
+                </div>
+                
+                <div class="user-menu">
+                    <div class="user-menu-section">Account</div>
+                    <div class="user-menu-item">
+                        <span class="icon">👤</span>
+                        <span>Il Mio Profilo</span>
+                    </div>
+                    <div class="user-menu-item">
+                        <span class="icon">📊</span>
+                        <span>Statistiche</span>
+                    </div>
+                    
+                    <div class="menu-divider"></div>
+                    
+                    <div class="user-menu-section">Comunicazioni</div>
+                    <div class="user-menu-item" style="position: relative;">
+                        <span class="icon">💬</span>
+                        <span>Chat Staff</span>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="user-menu-item" style="position: relative;">
+                        <span class="icon">🎫</span>
+                        <span>I Miei Ticket</span>
+                        <span class="notification-badge">7</span>
+                    </div>
+                    <div class="user-menu-item">
+                        <span class="icon">📢</span>
+                        <span>Annunci</span>
+                    </div>
+                    
+                    <div class="menu-divider"></div>
+                    
+                    <div class="user-menu-item">
+                        <span class="icon">⚙️</span>
+                        <span>Impostazioni</span>
+                    </div>
+                    <div class="user-menu-item" style="color: var(--danger);">
+                        <span class="icon">🚪</span>
+                        <span>Logout</span>
+                    </div>
+                </div>
             </div>
         </header>
 
-
-
         <div class="tab-navigation">
             <button class="tab-btn active" onclick="openTab(event, 'tickets')">📑 Gestione Ticket</button>
+            <button class="tab-btn" onclick="openTab(event, 'comandimc')">⛏️ Comandi MC</button>
             <button class="tab-btn" onclick="openTab(event, 'comandi')">⚡ Comandi Bot</button>
             <button class="tab-btn" onclick="openTab(event, 'regole')">🚩 Regole d'Oro</button>
             <button class="tab-btn" onclick="openTab(event, 'regolamento')">📜 Regolamento Server</button>
+			<button class="tab-btn" onclick="openTab(event, 'annunci')">📢 Annunci / Changelog</button>
+			<button class="tab-btn" onclick="openTab(event, 'pex')">🧩 Pex & Depex</button>
         </div>
 
+    <!-- TAB PEX & DEPEX -->
+        <div id="pex" class="tab-content">
+           <div class="section-card">
+           <h2 class="section-title"><span class="emoji">🧩</span> PEX & DEPEX</h2>
+           <p style="color: var(--text-muted); margin-bottom: 25px;">
+              Sezione dedicata alla gestione dei ruoli staff e player.
+           </p>
+
+           <div class="warning-box">
+            🚧 PEX e DEPEX in arrivo.  
+            Le procedure ufficiali, i permessi e i limiti per ogni rank verranno aggiunti prossimamente.
+           </div>
+      </div>
+  </div
         <!-- TAB GESTIONE TICKET -->
         <div id="tickets" class="tab-content active">
             <div class="section-card">
@@ -785,7 +1095,236 @@
             </div>
         </div>
 
-        <!-- TAB COMANDI -->
+        <!-- TAB COMANDI MC (NUOVO) -->
+        <div id="comandimc" class="tab-content">
+            <div class="section-card">
+                <h2 class="section-title"><span class="emoji">⛏️</span> Comandi In-Game Minecraft</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Permessi comandi per ogni rank dello staff nel server Minecraft.</p>
+
+                <div class="warning-box">
+                    ⚠️ REGOLE COMANDI: No Abuse, Prove Obbligatorie, Rispetto sempre!
+                </div>
+
+                <!-- Manager -->
+                <div class="ticket-category" style="border-left-color: #FF4444;">
+                    <div class="category-header">
+                        <span class="rank-badge rank-manager">Manager</span>
+                        Tutti i Comandi
+                    </div>
+                    <div class="response-box">
+                        <strong>🔥 Permessi completi:</strong> Accesso a TUTTI i comandi disponibili (*)
+                    </div>
+                </div>
+
+                <!-- SrAdmin -->
+                <div class="ticket-category" style="border-left-color: #FF8E53;">
+                    <div class="category-header">
+                        <span class="rank-badge rank-sradmin">SrAdmin</span>
+                        Tutti i Comandi
+                    </div>
+                    <div class="response-box">
+                        <strong>🔥 Permessi completi:</strong> Accesso a TUTTI i comandi disponibili (*)
+                    </div>
+                </div>
+
+                <!-- Admin -->
+                <div class="ticket-category" style="border-left-color: #FFB545;">
+                    <div class="category-header">
+                        <span class="rank-badge rank-admin">Admin</span>
+                        Tutti i Comandi
+                    </div>
+                    <div class="response-box">
+                        <strong>🔥 Permessi completi:</strong> Accesso a TUTTI i comandi disponibili (*)
+                    </div>
+                </div>
+
+                <!-- SrMod -->
+                <div class="ticket-category" style="border-left-color: #4CAF50;">
+                    <div class="category-header">
+                        <span class="rank-badge rank-srmod">SrMod</span>
+                        Comandi Moderazione Completa
+                    </div>
+                    <div class="permission-grid">
+                        <div class="permission-item">/ban</div>
+                        <div class="permission-item">/unban</div>
+                        <div class="permission-item">/mute</div>
+                        <div class="permission-item">/unmute</div>
+                        <div class="permission-item">/tempban</div>
+                        <div class="permission-item">/tempmute</div>
+                        <div class="permission-item">/kick</div>
+                        <div class="permission-item">/warn</div>
+                        <div class="permission-item">/ipban</div>
+                        <div class="permission-item">/ipmute</div>
+                        <div class="permission-item">/unwarn</div>
+                        <div class="permission-item">/history</div>
+                        <div class="permission-item">/staffhistory</div>
+                        <div class="permission-item">/banlist</div>
+                        <div class="permission-item">/warnlist</div>
+                        <div class="permission-item">/mutelist</div>
+                        <div class="permission-item">/dupeip</div>
+                        <div class="permission-item">/ipreport</div>
+                        <div class="permission-item">/checkban</div>
+                        <div class="permission-item">/checkmute</div>
+                        <div class="permission-item">/checkwarn</div>
+                        <div class="permission-item">/lockdown</div>
+                        <div class="permission-item">/lastuuid</div>
+                        <div class="permission-item">/notify (all)</div>
+                        <div class="permission-item">/ss</div>
+                        <div class="permission-item">/finish</div>
+                        <div class="permission-item">/sspectate</div>
+                        <div class="permission-item">/ssinfo</div>
+                    </div>
+                </div>
+
+                <!-- Mod -->
+                <div class="ticket-category" style="border-left-color: #6C63FF;">
+                    <div class="category-header">
+                        <span class="rank-badge rank-mod">Mod</span>
+                        Moderazione Standard
+                    </div>
+                    <div class="response-box">
+                        <strong>⚠️ Limiti:</strong> Ban fino a 1 mese massimo, Mute fino a 1 giorno massimo
+                    </div>
+                    <div class="permission-grid">
+                        <div class="permission-item">/tempban (max 1 mese)</div>
+                        <div class="permission-item">/tempmute (max 1 giorno)</div>
+                        <div class="permission-item">/warn</div>
+                        <div class="permission-item">/history</div>
+                        <div class="permission-item">/staffhistory</div>
+                        <div class="permission-item">/banlist</div>
+                        <div class="permission-item">/warnlist</div>
+                        <div class="permission-item">/mutelist</div>
+                        <div class="permission-item">/dupeip</div>
+                        <div class="permission-item">/checkban</div>
+                        <div class="permission-item">/checkmute</div>
+                        <div class="permission-item">/checkwarn</div>
+                        <div class="permission-item">/notify (all)</div>
+                        <div class="permission-item">/ss</div>
+                        <div class="permission-item">/finish</div>
+                        <div class="permission-item">/sspectate</div>
+                        <div class="permission-item">/ssinfo</div>
+                    </div>
+                </div>
+
+                <!-- Helper -->
+                <div class="ticket-category" style="border-left-color: #00BCD4;">
+                    <div class="category-header">
+                        <span class="rank-badge rank-helper">Helper</span>
+                        Moderazione Base
+                    </div>
+                    <div class="response-box">
+                        <strong>⚠️ Limiti:</strong> Ban fino a 1 mese massimo, Mute fino a 1 giorno massimo
+                    </div>
+                    <div class="permission-grid">
+                        <div class="permission-item">/tempban (max 1 mese)</div>
+                        <div class="permission-item">/tempmute (max 1 giorno)</div>
+                        <div class="permission-item">/warn</div>
+                        <div class="permission-item">/history</div>
+                        <div class="permission-item">/staffhistory</div>
+                        <div class="permission-item">/banlist</div>
+                        <div class="permission-item">/warnlist</div>
+                        <div class="permission-item">/mutelist</div>
+                        <div class="permission-item">/dupeip</div>
+                        <div class="permission-item">/checkban</div>
+                        <div class="permission-item">/checkmute</div>
+                        <div class="permission-item">/checkwarn</div>
+                        <div class="permission-item">/notify (all)</div>
+                        <div class="permission-item">/ss</div>
+                        <div class="permission-item">/finish</div>
+                        <div class="permission-item">/sspectate</div>
+                        <div class="permission-item">/ssinfo</div>
+                    </div>
+                </div>
+
+                <!-- Trial -->
+                <div class="ticket-category" style="border-left-color: #9E9E9E;">
+                    <div class="category-header">
+                        <span class="rank-badge rank-trial">Trial</span>
+                        Moderazione Limitata
+                    </div>
+                    <div class="response-box">
+                        <strong>⚠️ Limiti Stretti:</strong> Ban fino a 3 giorni massimo, Mute fino a 1 giorno massimo
+                    </div>
+                    <div class="permission-grid">
+                        <div class="permission-item">/tempban (max 3 giorni)</div>
+                        <div class="permission-item">/tempmute (max 1 giorno)</div>
+                        <div class="permission-item">/warn</div>
+                        <div class="permission-item">/history</div>
+                        <div class="permission-item">/staffhistory</div>
+                        <div class="permission-item">/banlist</div>
+                        <div class="permission-item">/warnlist</div>
+                        <div class="permission-item">/mutelist</div>
+                        <div class="permission-item">/dupeip</div>
+                        <div class="permission-item">/checkban</div>
+                        <div class="permission-item">/checkmute</div>
+                        <div class="permission-item">/checkwarn</div>
+                        <div class="permission-item">/notify (all)</div>
+                    </div>
+                </div>
+
+                <!-- Regole sui Comandi -->
+                <div class="section-card" style="background: var(--dark-lighter); margin-top: 30px;">
+                    <h3 class="section-title"><span class="emoji">📋</span> Regole Fondamentali</h3>
+                    
+                    <div class="warning-box">
+                        <strong>1. NO ABUSE:</strong><br>
+                        È VIETATO usare i comandi per vantaggi personali (darsi oggetti in sopravvivenza, usare vanish per griffare). L'abuso porta al DE-RANK IMMEDIATO.
+                    </div>
+
+                    <div class="warning-box">
+                        <strong>2. PROVE OBBLIGATORIE:</strong><br>
+                        Ogni volta che usi /ban o /mute, DEVI avere uno screenshot o video della prova. Senza prove = sanzione non valida.
+                    </div>
+
+                    <div class="warning-box">
+                        <strong>3. RISPETTO:</strong><br>
+                        NON usare /kick o /tp per infastidire i player. I comandi sono strumenti di lavoro, non giocattoli.
+                    </div>
+                </div>
+
+                <!-- Guida Rapida Comandi -->
+                <div class="section-card" style="background: var(--dark-lighter); margin-top: 20px;">
+                    <h3 class="section-title"><span class="emoji">📖</span> Guida Rapida Comandi Principali</h3>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">🔨 /ban [player] [motivo]</h4>
+                        <p style="color: var(--text-muted);">Ban permanente. Richiede prove screenshot/video. Solo SrMod+</p>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">⏱️ /tempban [player] [tempo] [motivo]</h4>
+                        <p style="color: var(--text-muted);">Ban temporaneo. Formato tempo: 1d = 1 giorno, 3h = 3 ore, 30m = 30 minuti</p>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">🔇 /mute [player] [motivo]</h4>
+                        <p style="color: var(--text-muted);">Mute permanente. Richiede prove. Solo SrMod+</p>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">⏱️ /tempmute [player] [tempo] [motivo]</h4>
+                        <p style="color: var(--text-muted);">Mute temporaneo. Rispetta i limiti del tuo rank!</p>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">⚠️ /warn [player] [motivo]</h4>
+                        <p style="color: var(--text-muted);">Warning al player. Tutti i rank staff possono usarlo.</p>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">📋 /history [player]</h4>
+                        <p style="color: var(--text-muted);">Vedi lo storico sanzioni di un player (ban, mute, warn)</p>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">🖥️ /ss [player]</h4>
+                        <p style="color: var(--text-muted);">Avvia screenshare (controllo anti-cheat). Congela il player e avvia la procedura.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB COMANDI BOT -->
         <div id="comandi" class="tab-content">
             <div class="section-card">
                 <h2 class="section-title"><span class="emoji">🤖</span> Comandi Bot - Guida Completa</h2>
@@ -1024,7 +1563,7 @@
                         <button class="copy-btn">Copia</button>
                     </div>
 
-                    <div class="command-box" onclick="copyCommand('/candidatura-rifiutata @utente helper "Motivo"')">
+                    <div class="command-box" onclick="copyCommand('/candidatura-rifiutata @utente helper \"Motivo\"')">
                         <div>
                             <span class="command-text">/candidatura-rifiutata @utente [tipo] [motivo]</span><br>
                             <small style="color: var(--text-muted);">Rifiuta candidatura con motivazione</small>
@@ -1199,12 +1738,83 @@
                 </div>
             </div>
         </div>
+		
+		<!-- TAB ANNUNCI -->
+<div id="annunci" class="tab-content">
+  <div class="section-card">
+    <h2 class="section-title"><span class="emoji">📢</span> Annunci & Changelog</h2>
+    <p style="color: var(--text-muted); margin-bottom: 25px;">
+      Tutti gli aggiornamenti e le modifiche effettuate al sito. Gli annunci più importanti restano in evidenza.
+    </p>
 
-        <div class="footer">
-            <p>🎯 AxisMC Staff Dashboard • Sempre aggiornato • Sempre professionale</p>
-            <p style="margin-top: 10px; font-size: 0.9em;">Made with 💜 for the best staff team</p>
-        </div>
+    <!-- Annuncio in evidenza -->
+    <div class="ticket-category" style="border-left-color: var(--danger);">
+      <div class="category-header">
+        📌 In Evidenza
+        <span class="priority-badge priority-alta">Priorità Alta</span>
+      </div>
+
+      <div class="response-box">
+        <strong>🚀 Rilascio Dashboard Staff — Versione 1.0</strong><br><br>
+        ✅ Nuova interfaccia completa stile “dashboard”<br>
+        ✅ Navigazione a tab (Ticket / Comandi MC / Comandi Bot / Regole / Regolamento / Annunci)<br>
+        ✅ Design dark moderno + animazioni + componenti interattivi<br>
+        ✅ Sistema copia-comandi con notifica “Comando copiato”<br>
+        ✅ Ricerca comandi bot integrata<br>
+      </div>
+
+      <div class="action-box">
+        <strong>📅 Data:</strong> 11/02/2026<br>
+        <strong>👨‍💻 Developer:</strong> ck_anto
+      </div>
     </div>
+
+    <!-- Changelog -->
+    <div class="ticket-category">
+      <div class="category-header">
+        🧾 Changelog Completo
+        <span class="priority-badge priority-normale">Aggiornamenti</span>
+      </div>
+
+      <ul class="rules-list">
+        <li>
+          <strong>✅ UI/Design:</strong><br>
+          Restyling completo (palette, card, badge priorità, animazioni, layout responsive).
+        </li>
+        <li>
+          <strong>✅ Ticket Guide:</strong><br>
+          Inserite risposte standard + checklist operative + comandi rapidi per ogni categoria.
+        </li>
+        <li>
+          <strong>✅ Comandi MC:</strong><br>
+          Tab dedicata con permessi per rank (Manager → Trial) + regole fondamentali anti-abuse.
+        </li>
+        <li>
+          <strong>✅ Comandi Bot:</strong><br>
+          Sezione organizzata per categorie + ricerca testuale comandi + warning box.
+        </li>
+        <li>
+          <strong>✅ Regole & Regolamento:</strong><br>
+          Regole d’oro per lo staff + regolamento server con sistema sanzioni.
+        </li>
+        <li>
+          <strong>✅ Profilo Staff (UI):</strong><br>
+          Dropdown menu utente con notifiche (Chat Staff / Ticket / Annunci) in alto a destra.
+        </li>
+      </ul>
+    </div>
+
+    <!-- Info versione -->
+    <div class="section-card" style="margin-top: 30px; background: rgba(108,99,255,0.08); border-color: var(--primary);">
+      <h3 style="margin-bottom: 10px;">📦 Info Build</h3>
+      <p style="color: var(--text-muted); line-height: 1.9;">
+        <strong>Versione:</strong> <span class="highlight">1.0</span><br>
+        <strong>Developer:</strong> <span class="highlight">ck_anto</span><br>
+        <strong>Progetto:</strong> AxisMC Staff Dashboard
+      </p>
+    </div>
+  </div>
+</div>
 
     <script>
         function openTab(evt, tabName) {
